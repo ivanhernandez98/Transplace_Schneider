@@ -10,7 +10,8 @@ using System.Windows.Forms;
 using CapaEntidad;
 using CapaNegocio;
 using CapaDatos;
-
+using Newtonsoft.Json;
+using CapaPresentacion.Model.Viaje;
 
 namespace CapaPresentacion
 {
@@ -89,16 +90,8 @@ namespace CapaPresentacion
 
         private void gridDatos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            CECliente cE = new CECliente();
-            //cE.Shipment = (string)txtId.Text;
-            //var list = gridDetalles.DataSource;
-            //cargarDetalles(list. [e.RowIndex].Shipment);
-
-            if (gridDetalles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null) {
-                cE.Shipment = (string)txtId.Text;
-                var list = gridDetalles.DataSource;
-                //cargarDetalles(list.[e.RowIndex].Shipment);
-            }
+            List<Viaje> viajes = JsonConvert.DeserializeObject<List<Viaje>>(JsonConvert.SerializeObject(gridDatos.DataSource, Formatting.Indented));
+            cargarDetalles(viajes[e.RowIndex].shipment);
         }
     }
 }
